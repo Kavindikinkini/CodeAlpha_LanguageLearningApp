@@ -4,6 +4,7 @@ export default function Home({ progress, onSelect }) {
   return (
     <div className="page">
       <div className="hero">
+        <p className="eyebrow">3 languages · 9 lessons · 1 streak waiting to start</p>
         <h1>Learn a new language, one card at a time</h1>
         <p>Pick a language and a category to start practicing.</p>
       </div>
@@ -14,7 +15,12 @@ export default function Home({ progress, onSelect }) {
           const total = Object.values(content[lang.id]).flat().length
           const pct = total ? Math.round((learned / total) * 100) : 0
           return (
-            <div key={lang.id} className="language-card">
+            <div
+              key={lang.id}
+              className="language-card"
+              style={{ '--lang-color': lang.color }}
+            >
+              <div className="language-card-glow" />
               <div className="language-card-head">
                 <span className="flag">{lang.flag}</span>
                 <h2>{lang.name}</h2>

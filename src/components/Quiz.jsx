@@ -51,11 +51,12 @@ export default function Quiz({ languageId, categoryId, recordQuizResult, goHome 
   if (done) {
     const pct = Math.round((score / questions.length) * 100)
     return (
-      <div className="page">
+      <div className="page" style={{ '--lang-color': lang.color }}>
         <div className="result-card">
           <h2>Quiz complete</h2>
           <p className="score-big">{score} / {questions.length}</p>
           <p className="muted">{pct}% correct · {lang.flag} {lang.name} · {category.name}</p>
+          <p className="xp-earned">+{score * 10} XP earned</p>
           <button className="nav-btn primary" onClick={goHome}>Back to languages</button>
         </div>
       </div>
@@ -63,7 +64,7 @@ export default function Quiz({ languageId, categoryId, recordQuizResult, goHome 
   }
 
   return (
-    <div className="page">
+    <div className="page" style={{ '--lang-color': lang.color }}>
       <div className="lesson-head">
         <h2>{lang.flag} {lang.name} · {category.name} quiz</h2>
         <p className="muted">Question {qIndex + 1} of {questions.length}</p>

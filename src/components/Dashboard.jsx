@@ -1,11 +1,45 @@
 import { languages, content } from '../data/lessonData'
+import { badgeDefs, computeTotals } from '../data/badges'
 
-export default function Dashboard({ progress }) {
+export default function Dashboard({ progress, meta }) {
+  const totals = computeTotals(progress, meta)
+  const unlockedBadges = badgeDefs.filter((b) => b.check(totals))
+
   return (
     <div className="page">
       <div className="hero">
         <h1>Your progress</h1>
         <p>Track how far you've come in each language.</p>
+      </div>
+
+      <div className="meta-row">
+        <div className="meta-card">
+          <p className="meta-value">🔥 {meta?.streak || 0}</p>
+          <p className="muted small">Day streak</p>
+        </div>
+        <div className="meta-card">
+          <p className="meta-value">✦ {meta?.xp || 0}</p>
+          <p className="muted small">Total XP</p>
+        </div>
+        <div className="meta-card">
+          <p className="meta-value">{unlockedBadges.length}/{badgeDefs.length}</p>
+          <p className="muted small">Badges earned</p>
+        </div>
+      </div>
+
+      <div className="badges-section">
+        <p className="card-label section-label">Achievements</p>
+        <div className="badge-grid">
+          {badgeDefs.map((b) => {
+            const unlocked = b.check(totals)
+            return (
+              <div key={b.id} className={`badge-chip ${unlocked ? 'unlocked' : 'locked'}`} title={b.label}>
+                <span className="badge-icon">{b.icon}</span>
+                <span className="badge-label">{b.label}</span>
+              </div>
+            )
+          })}
+        </div>
       </div>
 
       <div className="dashboard-grid">
@@ -22,7 +56,7 @@ export default function Dashboard({ progress }) {
             : null
 
           return (
-            <div key={lang.id} className="dashboard-card">
+            <div key={lang.id} className="dashboard-card" style={{ '--lang-color': lang.color }}>
               <div className="language-card-head">
                 <span className="flag">{lang.flag}</span>
                 <h2>{lang.name}</h2>

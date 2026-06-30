@@ -1,6 +1,15 @@
 import { useState } from 'react'
 import { content, categories, languages } from '../data/lessonData'
 
+function speak(text, locale) {
+  if (!('speechSynthesis' in window)) return
+  window.speechSynthesis.cancel()
+  const utterance = new SpeechSynthesisUtterance(text)
+  utterance.lang = locale
+  utterance.rate = 0.9
+  window.speechSynthesis.speak(utterance)
+}
+
 export default function Flashcards({ languageId, categoryId, progress, toggleLearned, goToQuiz }) {
   const items = content[languageId][categoryId]
   const [index, setIndex] = useState(0)
@@ -11,6 +20,7 @@ export default function Flashcards({ languageId, categoryId, progress, toggleLea
   const category = categories.find((c) => c.id === categoryId)
   const learnedSet = new Set(progress[languageId]?.wordsLearned || [])
   const isLearned = learnedSet.has(item.id)
+  const supportsSpeech = typeof window !== 'undefined' && 'speechSynthesis' in window
 
   function next() {
     setFlipped(false)
@@ -22,8 +32,13 @@ export default function Flashcards({ languageId, categoryId, progress, toggleLea
     setIndex((i) => (i - 1 + items.length) % items.length)
   }
 
+  function handleSpeak(e) {
+    e.stopPropagation()
+    speak(item.term, lang.speechLocale)
+  }
+
   return (
-    <div className="page">
+    <div className="page" style={{ '--lang-color': lang.color }}>
       <div className="lesson-head">
         <h2>{lang.flag} {lang.name} · {category.name}</h2>
         <p className="muted">Card {index + 1} of {items.length}</p>
@@ -32,10 +47,15 @@ export default function Flashcards({ languageId, categoryId, progress, toggleLea
       <div className={`flashcard ${flipped ? 'flipped' : ''}`} onClick={() => setFlipped((f) => !f)}>
         <div className="flashcard-inner">
           <div className="flashcard-face flashcard-front">
+            {supportsSpeech && (
+              <button className="speak-btn" onClick={handleSpeak} title="Hear pronunciation" aria-label="Hear pronunciation">
+                🔊
+              </button>
+            )}
             <p className="card-label">Term</p>
             <h3>{item.term}</h3>
             <p className="english-hint">{item.translation}</p>
-            <p className="muted small">Tap for pronunciation</p>
+            <p className="muted small">Tap for pronunciation guide</p>
           </div>
           <div className="flashcard-face flashcard-back">
             <p className="card-label">English</p>
