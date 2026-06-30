@@ -205,6 +205,10 @@ html, body, #root {
   transform: scale(0.99);
 }
 
+.sample-hint {
+  font-style: italic;
+}
+
 .lesson-head {
   margin-bottom: 20px;
 }
@@ -267,6 +271,13 @@ html, body, #root {
 
 .flashcard-face h3 {
   font-size: 26px;
+  margin: 0;
+}
+
+.english-hint {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
   margin: 0;
 }
 

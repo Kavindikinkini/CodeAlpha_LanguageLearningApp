@@ -25,16 +25,22 @@ export default function Home({ progress, onSelect }) {
               <p className="muted small">{learned} / {total} words learned</p>
 
               <div className="category-list">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    className="category-btn"
-                    onClick={() => onSelect(lang.id, cat.id)}
-                  >
-                    <span>{cat.name}</span>
-                    <span className="muted small">{cat.description}</span>
-                  </button>
-                ))}
+                {categories.map((cat) => {
+                  const sample = content[lang.id][cat.id][0]
+                  return (
+                    <button
+                      key={cat.id}
+                      className="category-btn"
+                      onClick={() => onSelect(lang.id, cat.id)}
+                    >
+                      <span>{cat.name}</span>
+                      <span className="muted small">{cat.description}</span>
+                      <span className="muted small sample-hint">
+                        e.g. {sample.term} = {sample.translation}
+                      </span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
           )

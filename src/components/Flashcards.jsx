@@ -34,10 +34,11 @@ export default function Flashcards({ languageId, categoryId, progress, toggleLea
           <div className="flashcard-face flashcard-front">
             <p className="card-label">Term</p>
             <h3>{item.term}</h3>
-            <p className="muted small">Tap to show answer</p>
+            <p className="english-hint">{item.translation}</p>
+            <p className="muted small">Tap for pronunciation</p>
           </div>
           <div className="flashcard-face flashcard-back">
-            <p className="card-label">Answer</p>
+            <p className="card-label">English</p>
             <h3>{item.translation}</h3>
             <p className="muted small">Pronunciation: {item.pronunciation}</p>
           </div>
