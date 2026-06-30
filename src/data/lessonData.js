@@ -2,13 +2,11 @@
 // Each language has categories (vocabulary, phrases, grammar),
 // and each category has a list of items with a term, translation,
 // and a simple pronunciation guide.
-
 export const languages = [
-  { id: 'es', name: 'Spanish', flag: '🇪🇸' },
-  { id: 'fr', name: 'French', flag: '🇫🇷' },
-  { id: 'de', name: 'German', flag: '🇩🇪' },
+  { id: 'es', name: 'Spanish', flag: '🇪🇸', color: '#e0593e', speechLocale: 'es-ES' },
+  { id: 'fr', name: 'French', flag: '🇫🇷', color: '#5b6ee8', speechLocale: 'fr-FR' },
+  { id: 'de', name: 'German', flag: '🇩🇪', color: '#cf9a32', speechLocale: 'de-DE' },
 ]
-
 export const categories = [
   { id: 'vocabulary', name: 'Vocabulary', description: 'Everyday words' },
   { id: 'phrases', name: 'Phrases', description: 'Common expressions' },
